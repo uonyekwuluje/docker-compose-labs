@@ -1,0 +1,30 @@
+---
+services:
+  mariadb:
+    image: mariadb:10.7.8
+    hostname: mariadb
+    restart: unless-stopped
+    container_name: mariadb
+    tty: true 
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: mariadb
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_HOST: '%'
+    volumes:
+      - data:/var/lib/mysql
+    ports:
+      - 3306:3306
+
+  phpmyadmin:
+    image: phpmyadmin:5.2.0
+    container_name: phpmyadmin   
+    restart: always
+    ports:
+      - 5013:80
+    environment:
+      - PMA_ARBITRARY=1
+
+volumes:
+  data:

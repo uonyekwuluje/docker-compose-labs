@@ -1,0 +1,43 @@
+---
+services:
+   apache-php:
+     hostname: apache-php
+     container_name: apache-php
+     build: './apache_php'
+     restart: always
+     ports:
+       - 80:80
+#     volumes:
+#       - ./public_html:/var/www/html/
+
+   mysql-db:
+     hostname: mysql-db 
+     container_name: mysql-db
+     image: mysql:8.0.29
+     restart: always
+     environment:
+       TZ: "America/New_York" 
+       MYSQL_ROOT_PASSWORD: 'password'
+       MYSQL_DATABASE: 'labdev_db'
+       MYSQL_USER: 'mysqluser'
+       MYSQL_PASSWORD: 'mysqlpassword'
+     volumes:
+       - mysqldata:/var/lib/mysql
+     ports:
+       - 3306:3306
+
+   phpmyadmin:
+     image: phpmyadmin:latest
+     hostname: phpmyadmin
+     container_name: phpmyadmin
+     ports:
+       - 8000:80
+     restart: always
+     environment:
+       PMA_ARBITRARY: 1 
+       PMA_HOST: "mariadb"
+     depends_on:
+       - mysql-db
+
+volumes:
+   mysqldata:

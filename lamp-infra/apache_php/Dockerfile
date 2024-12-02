@@ -9,12 +9,8 @@ RUN apt install -y jq net-tools net-tools gnupg2 ca-certificates libbz2-dev libc
 
 RUN docker-php-ext-install gd mysqli pdo_mysql bz2 iconv  
 
-# Install Composer (optionnal)
-#ENV COMPOSER_HOME /root/composer 
+# Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-#ENV PATH $COMPOSER_HOME/vendor/bin:$PATH
 
 WORKDIR /var/www/html/
-RUN composer require unleash/client symfony/http-client nyholm/psr7 symfony/cache
-#COPY composer.json composer.lock ./
-#RUN composer install 
+RUN composer require unleash/client symfony/http-client nyholm/psr7 symfony/cache phpmailer/phpmailer

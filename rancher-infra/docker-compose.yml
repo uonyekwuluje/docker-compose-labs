@@ -1,0 +1,16 @@
+---
+services:
+  rancher:
+    image: rancher/rancher:v2.11.0-alpha1-amd64
+    restart: always
+    hostname: rancher
+    container_name: rancher
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes: 
+      - rancher-data:/var/lib/rancher
+    privileged: true
+
+volumes:
+  rancher-data:
